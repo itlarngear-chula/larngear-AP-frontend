@@ -1,4 +1,4 @@
-import BotImage from '@/public/jomnoiz.jpg';
+import BotImage from '@/public/BotProfile.png';
 import Image from 'next/image';
 import { useState } from 'react';
 import { FiArrowRight } from 'react-icons/fi';
@@ -10,7 +10,7 @@ export default function Login({
 }): JSX.Element {
     const [studentId, setStudentId] = useState<string>('');
 
-    const isStudentIdValid = /^6[5|6|7]3\d{5}21$/.test(studentId);
+    const isStudentIdValid = /^6[5|6|7|8]3\d{5}21$/.test(studentId);
 
     const [isLoading, setIsLoading] = useState<boolean>(false);
 
@@ -23,21 +23,21 @@ export default function Login({
             </div>
             <div className="space-y-1">
                 <h1 className="font-bold text-3xl text-neutral-800">
-                    ใครน่ะ?!
+                    LG25 AP Bot
                 </h1>
                 <p className="text-sm text-neutral-500">
                     กรอกรหัสนิสิตเพื่อยืนยันตัวหน่อย
                 </p>
                 {showWarning && (
                     <p className="text-sm text-error-500">
-                        ต้องเป็นเด็กข้างไข่ JomnoiZ ก่อนนะงับ
+                        กรอกรหัสนิสิตให้ถูกต้องด้วยจ้า
                     </p>
                 )}
             </div>
             <input
                 type="text"
                 className="outline-none bg-transparent border-2 border-neutral-300 rounded-lg px-3 py-1.5"
-                placeholder="หก..."
+                placeholder="รหัสนิสิต"
                 value={studentId}
                 onChange={(e) => setStudentId(e.target.value)}
             />

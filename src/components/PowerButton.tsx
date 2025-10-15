@@ -26,7 +26,7 @@ export default function PowerButton(): JSX.Element {
                     เปิดใช้งานบอท
                 </h3>
                 <p className="text-xs text-neutral-500">
-                    เปิดให้ BotnoiZ แจ้ง AP เลย!
+                    เปิดเพื่อแจ้ง AP เลย!
                 </p>
             </div>
             <button
