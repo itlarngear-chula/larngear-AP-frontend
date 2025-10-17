@@ -43,10 +43,14 @@ export default function Login({
             />
             <button
                 onClick={() => {
-                    if (isLoading) return;
-                    loginHandler(studentId);
-                    setIsLoading(true);
-                    setShowWarning(true);
+                    if (isLoading) return; // Prevent multiple clicks during loading
+                    if (!isStudentIdValid) {
+                        setShowWarning(true); // Show warning only if the ID is invalid
+                        return;
+                    }
+                    setShowWarning(false); // Hide warning if the ID is valid
+                    setIsLoading(true); // Set loading state
+                    loginHandler(studentId); // Trigger the login handler
                 }}
                 className={`bg-neutral-800 text-white rounded-lg p-4 text-lg shadow-md duration-300 ${
                     isStudentIdValid

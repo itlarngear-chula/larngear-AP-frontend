@@ -93,7 +93,7 @@ export default function APSelection(): JSX.Element {
                     onClick={() => {
                         setSelectedAP([]);
                     }}
-                    className="border-primary-500 border-2 rounded-2xl px-6 py-2 text-primary-500 font-medium"
+                    className="bg-primary-500 rounded-2xl px-6 py-2 text-white font-medium"
                 >
                     ไม่เลือกทุกฝ่าย
                 </button>
@@ -202,12 +202,12 @@ export default function APSelection(): JSX.Element {
                     </button>
                 </div>
             )}
-            <div className="flex justify-center mt-4">
+            <div className="flex justify-center mt-6">
                 <a
                     href="/slots"
-                    className="border-primary-500 border-2 rounded-2xl px-6 py-2 text-primary-500 font-medium"
+                    className="bg-primary-500 text-white rounded-2xl mt-6 px-6 py-2 font-medium"
                 >
-                    AP Slots
+                    ดู AP Slots
                 </a>
             </div>
         </div>
