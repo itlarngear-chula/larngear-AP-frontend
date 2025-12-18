@@ -1,5 +1,6 @@
 import LiffProvider from '@/contexts/LiffContext';
 import './globals.css';
+import DynamicLayout from '@/components/DynamicLayout';
 import { IBM_Plex_Sans_Thai } from 'next/font/google';
 import AuthProvider from '@/contexts/AuthContext';
 
@@ -25,9 +26,12 @@ export default function RootLayout({
             >
                 <LiffProvider>
                     <AuthProvider>
-                        <div className="max-w-screen-sm w-full p-4">
+                        {/* <div className="max-w-screen-sm w-full p-4">
                             {children}
-                        </div>
+                        </div> */}
+                        <DynamicLayout>
+                            {children}
+                        </DynamicLayout>
                     </AuthProvider>
                 </LiffProvider>
             </body>
