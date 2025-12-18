@@ -113,6 +113,7 @@ export default function TimelineBoard({ slots, setSelectedEditSlot }: TimelineBo
         <>
             <div className="bg-white rounded-xl shadow-sm p-2 overflow-hidden">
                 <Timeline
+                    stackItems={true}   // Display items in stacked manner
                     groups={groups}
                     items={items}
                     selected={selectedSlotData ? [selectedSlotData.slot] : []}
