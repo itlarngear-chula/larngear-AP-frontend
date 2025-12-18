@@ -3,7 +3,7 @@
 import { ISlot } from '@/interfaces/ap';
 import axios from 'axios';
 import { useEffect, useState } from 'react';
-import { PiFunnelFill, PiInfoFill, PiGearFill } from 'react-icons/pi';
+import { PiFunnelFill, PiInfoFill, PiGearFill, PiChartBarFill } from 'react-icons/pi';
 import moment from 'moment';
 import { useAuth } from '@/contexts/AuthContext';
 import Edit from '@/components/Edit';
@@ -245,6 +245,12 @@ export default function Upcoming() {
                     </button>
                 </div>
                 <div className="flex h-full space-x-1">
+                    <button
+                        onClick={() => window.location.href = '/slots/timeline'}
+                        className="h-full aspect-square grid place-content-center text-2xl rounded-lg text-gray-400"
+                    >
+                        <PiChartBarFill />
+                    </button>
                     <button
                         onClick={() => setShowDetails(!showDetails)}
                         className={`h-full aspect-square grid place-content-center text-2xl rounded-lg ${
