@@ -35,6 +35,7 @@ export default function APSelection(): JSX.Element {
             .patch(
                 process.env.NEXT_PUBLIC_API_URL + '/user/' + user?.studentId,
                 {
+                    notificationTime: 0,
                     selectedDepartments: selectedAP,
                     selectedColors: selectedColors,
                 }
