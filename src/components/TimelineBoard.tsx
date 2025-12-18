@@ -8,15 +8,11 @@ import './TimelineBoard.css';
 import moment from 'moment';
 import 'moment/locale/th';
 import { ISlot } from '@/interfaces/ap';
+import { TimelineBoardProps } from '@/interfaces/swimlane';
 import { DepartmentColors } from '@/interfaces/department';
 import { useAuth } from '@/contexts/AuthContext';
 import Slot from './Slot';
 import { PiX } from 'react-icons/pi';
-
-interface TimelineBoardProps {
-    slots: ISlot[] | null;
-    setSelectedEditSlot: React.Dispatch<React.SetStateAction<number | null>>;
-}
 
 export default function TimelineBoard({ slots, setSelectedEditSlot }: TimelineBoardProps) {
     const { user } = useAuth();
