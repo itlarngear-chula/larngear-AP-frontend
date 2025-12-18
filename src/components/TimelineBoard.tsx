@@ -12,26 +12,46 @@ import { TimelineBoardProps } from '@/interfaces/swimlane';
 import { DepartmentColors } from '@/interfaces/department';
 import { useAuth } from '@/contexts/AuthContext';
 import Slot from './Slot';
-import { PiX } from 'react-icons/pi';
+import { PiX, PiFunnelFill } from 'react-icons/pi';
 
 export default function TimelineBoard({ slots, setSelectedEditSlot }: TimelineBoardProps) {
     const { user } = useAuth();
     const [selectedSlotData, setSelectedSlotData] = useState<ISlot | null>(null);
 
+    const [isFilter, setIsFilter] = useState<boolean>(false);
+
+    useEffect(() => {
+        setIsFilter((localStorage.getItem('isFilter') as 'true' | 'false') === 'true');
+    }, []);
+
+    useEffect(() => {
+        localStorage.setItem('isFilter', isFilter.toString());
+    }, [isFilter]);
+
     const [visibleTimeStart, setVisibleTimeStart] = useState(moment().add(-1, 'hour').valueOf());
     const [visibleTimeEnd, setVisibleTimeEnd] = useState(moment().add(11, 'hour').valueOf());
 
-    const groups = React.useMemo(() => {
+    const filteredSlots = React.useMemo(() => {
         if (!slots) return [];
-        const uniqueDepts = Array.from(new Set(slots.map((s) => s.department)));
+        
+        if (isFilter && user?.selectedDepartments) {
+            return slots.filter((slot) => user.selectedDepartments.includes(slot.department));
+        }
+        
+        return slots;
+    }, [slots, isFilter, user]);
+
+    const groups = React.useMemo(() => {
+        if (!filteredSlots) return [];
+        const uniqueDepts = Array.from(new Set(filteredSlots.map((s) => s.department)));
         return uniqueDepts.map((dept) => ({ id: dept, title: dept }));
-    }, [slots]);
+    }, [filteredSlots]);
 
     const userColors: Record<string, keyof typeof DepartmentColors> = (user?.selectedColors as Record<string, keyof typeof DepartmentColors>) ?? {};
 
     const items = React.useMemo(() => {
-        if (!slots) return [];
-        return slots.map((slot) => {
+        if (!filteredSlots) return [];
+        return filteredSlots.map((slot) => {
             const startTime = moment(slot.start);
             let endTime = moment(slot.end);
 
@@ -71,7 +91,7 @@ export default function TimelineBoard({ slots, setSelectedEditSlot }: TimelineBo
                 originalData: slot
             };
         });
-    }, [slots, user]);
+    }, [filteredSlots, user]);
 
     const handleItemSelect = (itemId: number, e: any, time: number) => {
         const found = slots?.find((s) => s.slot === itemId);
@@ -87,7 +107,7 @@ export default function TimelineBoard({ slots, setSelectedEditSlot }: TimelineBo
     const defaultTimeStart = moment().add(-1, 'hour');
     const defaultTimeEnd = moment().add(11, 'hour');
 
-    if (!slots || groups.length === 0) return <div className="p-4 text-center">Loading...</div>;
+    if (!slots || groups.length === 0 && !isFilter) return <div className="p-4 text-center">Loading...</div>;
 
     return (
         <>
@@ -99,7 +119,7 @@ export default function TimelineBoard({ slots, setSelectedEditSlot }: TimelineBo
                     onCanvasClick={() => setSelectedSlotData(null)}
                     defaultTimeStart={defaultTimeStart}
                     defaultTimeEnd={defaultTimeEnd}
-                    sidebarWidth={80}
+                    sidebarWidth={120}
                     lineHeight={60}
                     itemHeightRatio={0.70}
                     canMove={false}
@@ -122,7 +142,12 @@ export default function TimelineBoard({ slots, setSelectedEditSlot }: TimelineBo
                     <TimelineHeaders className="sticky top-0 z-20 bg-white">
                         <SidebarHeader>
                             {({ getRootProps }) => {
-                                return <div {...getRootProps()} className="flex items-center justify-center bg-neutral-100 font-bold text-neutral-500 text-sm border-r border-b border-neutral-200">Dept.</div>;
+                                return <div {...getRootProps()} className="flex items-center justify-center gap-2 bg-neutral-100 font-semibold !text-neutral-800 text-md border-r border-b border-neutral-200 cursor-pointer"
+                                     onClick={() => setIsFilter(!isFilter)}
+                                >
+                                    <span>Dept.</span>
+                                    <PiFunnelFill className={`${isFilter ? 'text-primary-500' : 'text-neutral-400'}`} />
+                                </div>;
                             }}
                         </SidebarHeader>
 
@@ -179,7 +204,7 @@ export default function TimelineBoard({ slots, setSelectedEditSlot }: TimelineBo
                 </Timeline>
 
                 <p className="text-xs text-center text-gray-400 mt-2">
-                    เลื่อนซ้าย-ขวา หรือถ่างนิ้วเพื่อซูมเวลา
+                    เลื่อนซ้าย-ขวา หรือถ่างนิ้วเพื่อซูมเวลา | กดที่ Dept. เพื่อกรองแผนก
                 </p>
             </div>
 

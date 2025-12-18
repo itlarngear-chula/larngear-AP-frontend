@@ -45,7 +45,7 @@
   background-color: initial;
   color: #fff;
   font-weight: bold; 
-  background-color: #777; /* ปรับสี header แถวบน */
+  background-color: #777;
 }
 
 .react-calendar-timeline .rct-header-root {
@@ -125,7 +125,6 @@
   text-overflow: ellipsis;
 }
 
-/* Custom Style เพิ่มเติมเพื่อให้เข้ากับธีม */
 .react-calendar-timeline .rct-sidebar-header {
     border-right: 1px solid #bbb;
     background-color: #f3f4f6;
