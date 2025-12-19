@@ -5,6 +5,7 @@ import { useEffect, useState } from 'react';
 import { useAuth } from '@/contexts/AuthContext';
 import { ISlot } from '@/interfaces/ap';
 import TimelineBoard from '@/components/TimelineBoard';
+import VerticalTimelineBoard from '@/components/VerticalTimelineBoard';
 import Edit from '@/components/Edit';
 import Link from 'next/link';
 import { PiListBullets } from 'react-icons/pi'; 
@@ -44,7 +45,11 @@ export default function TimelinePage() {
 
             {/* Timeline Component */}
             <div className="px-2">
-                <TimelineBoard 
+                {/* <TimelineBoard 
+                    slots={slots} 
+                    setSelectedEditSlot={setSelectedEditSlot} 
+                /> */}
+                <VerticalTimelineBoard 
                     slots={slots} 
                     setSelectedEditSlot={setSelectedEditSlot} 
                 />
