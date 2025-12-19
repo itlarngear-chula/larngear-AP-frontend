@@ -4,6 +4,7 @@ import moment from 'moment';
 import 'moment/locale/th';
 import 'react-big-calendar/lib/css/react-big-calendar.css';
 import { ISlot } from '@/interfaces/ap';
+import { VerticalTimelineBoardProps } from '@/interfaces/verticalTimeline';
 import { DepartmentColors } from '@/interfaces/department';
 import { useAuth } from '@/contexts/AuthContext';
 import Slot from './Slot';
@@ -11,15 +12,10 @@ import { PiX, PiFunnelFill } from 'react-icons/pi';
 
 const localizer = momentLocalizer(moment);
 
-interface VerticalTimelineBoardProps {
-    slots: ISlot[] | null;
-    setSelectedEditSlot: React.Dispatch<React.SetStateAction<number | null>>;
-}
-
 export default function VerticalTimelineBoard({ slots, setSelectedEditSlot }: VerticalTimelineBoardProps) {
     const { user } = useAuth();
     const [selectedSlotData, setSelectedSlotData] = useState<ISlot | null>(null);
-
+    const [date, setDate] = useState(new Date());
     const [isFilter, setIsFilter] = useState<boolean>(false);
 
     useEffect(() => {
@@ -93,6 +89,17 @@ export default function VerticalTimelineBoard({ slots, setSelectedEditSlot }: Ve
         };
     };
 
+    const minChartWidth = useMemo(() => {
+        const columnWidth = 250; // ความกว้างต่อ 1 แผนก (ปรับเลขนี้ได้ตามชอบ)
+        const totalWidth = resourceMap.length * columnWidth;
+        // ให้กว้างอย่างน้อย 100% ของหน้าจอ ถ้าแผนกน้อยจะได้ไม่ดูโหวง
+        return Math.max(totalWidth, 1000); 
+    }, [resourceMap]);
+
+    const handleNavigate = (newDate: Date) => {
+        setDate(newDate);
+    };
+
     if (!slots) return <div className="p-10 text-center">Loading...</div>;
 
     return (
@@ -102,6 +109,10 @@ export default function VerticalTimelineBoard({ slots, setSelectedEditSlot }: Ve
                 {/* Filter BTN. */}
                 <div className="flex justify-between items-center mb-4 px-2">
                     <h2 className="text-xl font-bold text-neutral-700">ตารางประจำวัน</h2>
+                    {/* Set date to display current date you are */}
+                    <p className="text-sm text-neutral-500 font-medium mt-1">
+                            {moment(date).format('LL')} 
+                        </p>
                     <button 
                         onClick={() => setIsFilter(!isFilter)}
                         className={`flex items-center gap-2 px-3 py-1.5 rounded-lg border transition-all ${
@@ -116,25 +127,27 @@ export default function VerticalTimelineBoard({ slots, setSelectedEditSlot }: Ve
                 </div>
 
                 {/* Calendar */}
-                <div className="flex-1 overflow-y-auto">
-                    <Calendar
-                        localizer={localizer}
-                        events={events}
-                        defaultView={Views.DAY}
-                        dayLayoutAlgorithm="no-overlap"
-                        views={['day']}         
-                        step={30}               // Freq Bandwidth = 30 min
-                        timeslots={2}        
-                        resources={resourceMap} 
-                        resourceIdAccessor="id"
-                        resourceTitleAccessor="title"
-                        onSelectEvent={(event) => setSelectedSlotData(event as unknown as ISlot)}
-                        eventPropGetter={eventPropGetter}
-
-                        scrollToTime={new Date(1970, 1, 1, 8, 0, 0)} 
-                        
-                        className="font-ibm-plex"
-                    />
+                <div className="flex-1 overflow-auto relative">
+                    <div style={{ minWidth: `${minChartWidth}px`, height: '100%' }}>
+                        <Calendar
+                            localizer={localizer}
+                            events={events}
+                            date={date}
+                            onNavigate={handleNavigate}
+                            defaultView={Views.DAY}
+                            dayLayoutAlgorithm="no-overlap" 
+                            views={['day']}         
+                            step={30}
+                            timeslots={2}        
+                            resources={resourceMap} 
+                            resourceIdAccessor="id"
+                            resourceTitleAccessor="title"
+                            onSelectEvent={(event) => setSelectedSlotData(event as unknown as ISlot)}
+                            eventPropGetter={eventPropGetter}
+                            scrollToTime={new Date(1970, 1, 1, 8, 0, 0)} 
+                            className="font-ibm-plex"
+                        />
+                    </div>
                 </div>
             </div>
 
