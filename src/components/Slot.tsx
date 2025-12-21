@@ -74,14 +74,24 @@ const Slot: React.FC<SlotProps> = ({
                 <span>{`#${slot.slot} | ${
                     start === end ? start : `${start} - ${end}`
                 }`}</span>
-                {user?.superuser && (
+                <div className="flex items-center gap-2">
+                    {slot.totalOffset != null && slot.totalOffset !== 0 && (
+                    <p className="text-sm font-medium text-neutral-500">
+                        {slot.totalOffset < 0
+                        ? `-${Math.abs(slot.totalOffset)} นาทีแล้ว`
+                        : `+${Math.abs(slot.totalOffset)} นาทีแล้ว`}
+                    </p>
+                    )}
+
+                    { user?.superuser && (
                     <span
                         onClick={() => setSelectedEditSlot(slot.slot)}
                         className="text-lg rounded-lg text-neutral-400 cursor-pointer"
                     >
                         <PiPencilSimpleFill />
                     </span>
-                )}
+                    )}
+                </div>
             </h3>
             <div className="flex flex-row space-x-4 justify-between items-center">
                 <div className="space-y-2">
