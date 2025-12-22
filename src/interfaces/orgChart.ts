@@ -13,24 +13,28 @@ const larngearCampDepartment = {
             shortName: 'PLAN',
         },
         {
-            name: 'ฝ่ายกิจ',
-            shortName: 'ACT',
+            name: 'ฝ่ายกิจกรรม',
+            shortName: 'ACTY',
         },
         {
             name: 'ฝ่ายกิจ MC',
             shortName: 'MC',
         },
         {
-            name: 'ฝ่ายสวัสดิการ',
+            name: 'ฝ่ายพัสดุ',
             shortName: 'SUPPLY',
         },
         {
+            name: 'ฝ่ายสวัสดิการ',
+            shortName: 'WELFARE',
+        },
+        {
             name: 'ฝ่ายสถานที่',
-            shortName: 'PLACE',
+            shortName: 'LOCATION',
         },
         {
             name: 'ฝ่ายพยาบาล',
-            shortName: 'NURSE',
+            shortName: 'MEDIC',
         },
         {
             name: 'ฝ่ายทะเบียน',
@@ -57,7 +61,7 @@ const larngearCampDepartment = {
             shortName: 'SECURITY',
         },
         {
-            name: 'ฝ่ายจัดหาทุน',
+            name: 'ฝ่ายสปอนเซอร์',
             shortName: 'SPONSOR',
         },
     ],
