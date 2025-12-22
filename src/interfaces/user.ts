@@ -6,6 +6,7 @@ export interface IUser {
     displayName: string;
     userId: string;
     enableBot: boolean;
+    notificationTime: number;
     selectedDepartments: TDepartment[];
     superuser: boolean;
     selectedColors: Record<TDepartment, TDepartmentColors>;
