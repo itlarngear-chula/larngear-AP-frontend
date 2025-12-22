@@ -34,7 +34,7 @@ const larngearCampDepartment = {
         },
         {
             name: 'ฝ่ายพยาบาล',
-            shortName: 'MED',
+            shortName: 'MEDIC',
         },
         {
             name: 'ฝ่ายทะเบียน',
