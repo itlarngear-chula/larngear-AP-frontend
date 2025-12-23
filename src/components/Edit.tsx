@@ -22,6 +22,7 @@ const Edit: React.FC<EditProps> = ({ slot: inputSlot, onFinished, user }) => {
             await axios
                 .get(process.env.NEXT_PUBLIC_API_URL + '/ap/upcoming')
                 .then((res) => {
+                    console.log('Upcoming slot:', res.data.data[0].slot);
                     setUpcomingSlot(res.data.data[0]);
                     setSlot(res.data.data[0].slot);
                 })
@@ -103,13 +104,13 @@ const Edit: React.FC<EditProps> = ({ slot: inputSlot, onFinished, user }) => {
                                 onChange={(e) => setSlot(+e.target.value)}
                                 className="bg-transparent border-2 border-neutral-300 rounded-lg px-4 py-1 text-neutral-700 font-bold"
                             >
-                                <option value={upcomingSlot?.slot || 1}>
-                                    {upcomingSlot?.slot || 1}
+                                <option value={slot || upcomingSlot?.slot || 1}>
+                                    {slot || upcomingSlot?.slot || 1}
                                 </option>
-                                {upcomingSlot?.slot &&
+                                {slot &&
                                     createArrayFromRange(
                                         1,
-                                        upcomingSlot.slot + 100
+                                        slot + 100
                                     ).map((slot) => (
                                         <option key={slot} value={slot}>
                                             {slot}
