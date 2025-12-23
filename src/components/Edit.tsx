@@ -14,15 +14,15 @@ interface EditProps {
 const Edit: React.FC<EditProps> = ({ slot: inputSlot, onFinished, user }) => {
     const [offset, setOffset] = useState<number>(0);
     const [slot, setSlot] = useState<number>(0);
-    const [activeSlot, setActiveSlot] = useState<ISlot | null>(null);
+    const [upcomingSlot, setUpcomingSlot] = useState<ISlot | null>(null);
     const [isLoading, setIsLoading] = useState<boolean>(false);
 
     useEffect(() => {
-        const fetchActiveSlot = async () => {
+        const fetchUpcomingSlot = async () => {
             await axios
-                .get(process.env.NEXT_PUBLIC_API_URL + '/ap/active')
+                .get(process.env.NEXT_PUBLIC_API_URL + '/ap/upcoming')
                 .then((res) => {
-                    setActiveSlot(res.data.data[0]);
+                    setUpcomingSlot(res.data.data[0]);
                     setSlot(res.data.data[0].slot);
                 })
                 .catch((error) => {
@@ -30,7 +30,7 @@ const Edit: React.FC<EditProps> = ({ slot: inputSlot, onFinished, user }) => {
                 });
         };
 
-        fetchActiveSlot();
+        fetchUpcomingSlot();
     }, []);
 
     const announceHandler = async () => {
@@ -99,17 +99,17 @@ const Edit: React.FC<EditProps> = ({ slot: inputSlot, onFinished, user }) => {
                                 ตั้งแต่ Slot ที่
                             </span>
                             <select
-                                value={slot || activeSlot?.slot || 1}
+                                value={slot || upcomingSlot?.slot || 1}
                                 onChange={(e) => setSlot(+e.target.value)}
                                 className="bg-transparent border-2 border-neutral-300 rounded-lg px-4 py-1 text-neutral-700 font-bold"
                             >
-                                <option value={activeSlot?.slot || 1}>
-                                    {activeSlot?.slot || 1}
+                                <option value={upcomingSlot?.slot || 1}>
+                                    {upcomingSlot?.slot || 1}
                                 </option>
-                                {activeSlot?.slot &&
+                                {upcomingSlot?.slot &&
                                     createArrayFromRange(
-                                        activeSlot.slot,
-                                        300
+                                        1,
+                                        upcomingSlot.slot + 100
                                     ).map((slot) => (
                                         <option key={slot} value={slot}>
                                             {slot}
