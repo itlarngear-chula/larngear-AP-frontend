@@ -12,26 +12,26 @@ export default function ProfileButton(): JSX.Element {
   const { logoutHandler } = useAuth();
 
   return (
-    <div className="float-right mb-3" onClick={() => setIsOpen(!isOpen)}>
-      <div className="relative w-fit flex items-center justify-between gap-3 rounded-xl shadow-md bg-white px-3 py-2 ">
-        <div className=''>
-          <MdAccountCircle className='w-8 h-8 fill-primary-500' />
-        </div>
-        <div className='flex flex-col items-center justify-center'>
-          <div className='flex flex-col '>
-            <div className='flex items-center gap-2.5'>
-              <p className='text-neutral-800 font-bold'>{user?.displayName}</p>
-              <div onClick={() => setIsOpen(!isOpen)} className='p-1 cursor-pointer hover:bg-gray-200 hover:rounded-full'>
-                {isOpen ? <IoIosArrowUp className='fill-neutral-800' /> : <IoIosArrowDown className='fill-neutral-800' />}
-              </div>
+    <div
+      onClick={() => setIsOpen(!isOpen)}
+      className="w-fit h-full flex items-center justify-between gap-2 rounded-xl shadow-md bg-white px-2 py-2 ">
+      <div className=''>
+        <MdAccountCircle className='w-8 h-8 fill-primary-500' />
+      </div>
+      <div className='w-full flex flex-col items-center justify-center'>
+        <div className='flex flex-col'>
+          <div className='flex items-center gap-2.5'>
+            <p className='text-neutral-800 font-bold text-sm'>{user?.displayName}</p>
+            <div onClick={() => setIsOpen(!isOpen)} className='p-1 cursor-pointer hover:bg-gray-200 hover:rounded-full'>
+              {isOpen ? <IoIosArrowUp className='fill-neutral-800' /> : <IoIosArrowDown className='fill-neutral-800' />}
             </div>
-            {user?.superuser && <p className='text-neutral-800 text-xs'>(ผู้ดูแลระบบ)</p>}
           </div>
+          {user?.superuser && <p className='text-neutral-800 text-xs'>(ผู้ดูแลระบบ)</p>}
         </div>
       </div>
       {
         isOpen && (
-          <div className="absolute top-15 w-fit flex flex-col items-center justify-center rounded-xl shadow-md bg-white cursor-pointer ">
+          <div className="absolute top-20 w-fit flex flex-col items-center justify-center rounded-xl shadow-md bg-white cursor-pointer ">
             {
               user?.superuser &&
               <Link
