@@ -22,7 +22,7 @@ export default function PowerButton(): JSX.Element {
     return (
         <div className="flex items-center justify-between gap-2 w-full h-full rounded-xl shadow-md bg-white px-3 py-2">
             <div>
-                <h3 className="font-bold text-sm text-neutral-800">
+                <h3 className="font-bold text-lg text-neutral-800">
                     เปิดใช้งานบอท
                 </h3>
                 <p className="text-xs text-neutral-500">

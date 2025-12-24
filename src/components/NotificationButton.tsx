@@ -22,7 +22,7 @@ export default function NotificationButton(): JSX.Element {
     return (
         <div className="flex items-center justify-between w-full rounded-xl shadow-md bg-white px-4 py-6">
             <div>
-                <h3 className="font-semibold text-xl text-neutral-800">
+                <h3 className="font-semibold text-lg text-neutral-800">
                     การแจ้งเตือนล่วงหน้า
                 </h3>
                 <p className="text-xs text-neutral-500">

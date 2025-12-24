@@ -21,12 +21,16 @@ const larngearCampDepartment = {
             shortName: 'MC',
         },
         {
-            name: 'ฝ่ายพัสดุ',
-            shortName: 'SUPPLY',
+            name: 'ฝ่ายวิชาการ',
+            shortName: 'VCK',
         },
         {
             name: 'ฝ่ายสวัสดิการ',
             shortName: 'WELFARE',
+        },
+        {
+            name: 'ฝ่ายพัสดุ',
+            shortName: 'SUPPLY',
         },
         {
             name: 'ฝ่ายสถานที่',
@@ -53,16 +57,12 @@ const larngearCampDepartment = {
             shortName: 'FINANCE',
         },
         {
-            name: 'ฝ่ายวิชาการ',
-            shortName: 'VCK',
+            name: 'ฝ่ายสปอนเซอร์',
+            shortName: 'SPONSOR',
         },
         {
             name: 'ฝ่าย Security',
             shortName: 'SECURITY',
-        },
-        {
-            name: 'ฝ่ายสปอนเซอร์',
-            shortName: 'SPONSOR',
         },
     ],
 };
