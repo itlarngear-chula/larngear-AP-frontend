@@ -21,16 +21,6 @@ export default function PowerButton(): JSX.Element {
 
     return (
         <div className="flex items-center justify-between gap-2 w-full h-full rounded-xl shadow-md bg-white px-3 py-2">
-            <button
-                onClick={toggleHandler}
-                className={`flex p-1 w-14 h-[30px] rounded-full duration-200 ${
-                    isAnnounce
-                        ? 'pl-[30px] bg-primary-500'
-                        : 'pl-1 bg-neutral-300'
-                }`}
-            >
-                <div className="h-full aspect-square rounded-full bg-white duration-300"></div>
-            </button>
             <div>
                 <h3 className="font-bold text-sm text-neutral-800">
                     เปิดใช้งานบอท
@@ -39,6 +29,15 @@ export default function PowerButton(): JSX.Element {
                     เปิดเพื่อแจ้ง AP เลย!
                 </p>
             </div>
+            <button
+                onClick={toggleHandler}
+                className={`flex p-1 w-14 h-[30px] rounded-full duration-200 ${isAnnounce
+                        ? 'pl-[30px] bg-primary-500'
+                        : 'pl-1 bg-neutral-300'
+                    }`}
+            >
+                <div className="h-full aspect-square rounded-full bg-white duration-300"></div>
+            </button>
         </div>
     );
 }
