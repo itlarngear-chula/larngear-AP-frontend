@@ -11,8 +11,10 @@ export default function Home() {
 
     return (
         <div className="space-y-4">
-            <ProfileButton />
-            <PowerButton />
+            <div className='w-full h-20 flex items-center justify-between gap-2'>
+                <PowerButton />
+                <ProfileButton />
+            </div>
             <NotificationButton />
             {user?.superuser && <Edit user={user} />}
             <APSelection />
