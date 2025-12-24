@@ -70,8 +70,16 @@ export default function APSelection(): JSX.Element {
     }, []);
 
     return (
-        <div className="w-full rounded-xl shadow-md bg-white px-6 py-4 space-y-2">
-            <div className="py-2 flex  justify-evenly">
+        <div className="w-full rounded-xl shadow-md bg-white px-5 py-4 space-y-1">
+            <h3 className="font-semibold text-lg text-neutral-800 pt-2">
+                    เลือกฝ่ายที่ต้องการแจ้งเตือน AP
+                </h3>
+             {selectedAP.length === 0 && (
+                <div className="text-error-500 text-sm font-normal pl-1">
+                    อย่าลืมเลือกฝ่ายเพื่อรับการแจ้งเตือนด้วยนะ!
+                </div>
+            )}
+            <div className="flex pt-1">
                 <button
                     onClick={() => {
                         setSelectedAP(
@@ -86,7 +94,7 @@ export default function APSelection(): JSX.Element {
                                 .map((ap) => ap.shortName)
                         );
                     }}
-                    className="bg-primary-500 rounded-2xl px-6 py-2 text-white font-medium"
+                    className="bg-primary-500/90 text-white font-medium text-sm rounded-tl-2xl rounded-bl-2xl px-3 py-2"
                 >
                     เลือกทุกฝ่าย
                 </button>
@@ -94,23 +102,18 @@ export default function APSelection(): JSX.Element {
                     onClick={() => {
                         setSelectedAP([]);
                     }}
-                    className="bg-primary-500 rounded-2xl px-6 py-2 text-white font-medium"
+                    className="border-2 border-primary-500/90 bg-primary-500/10 text-primary-500 font-medium text-sm rounded-tr-2xl rounded-br-2xl px-3 py-2"
                 >
-                    ไม่เลือกทุกฝ่าย
+                    ล้างการเลือก
                 </button>
             </div>
-            {selectedAP.length === 0 && (
-                <div className="py-2 text-error-300">
-                    อย่าลืมเลือกฝ่ายที่ต้องการแจ้ง AP นะ!
-                </div>
-            )}
             {Object.keys(departments).map((department) => (
-                <div key={department} className="py-2">
-                    <p className="font-medium text-neutral-500">{department}</p>
+                <div key={department} className="pt-1">
+                    {/* <p className="font-medium text-neutral-500">{department}</p> */}
                     {departments[department as keyof typeof departments].map(
                         (ap) => (
                             <div key={ap.shortName}>
-                                <div className="flex items-center space-x-3 py-2 mt-2 w-full">
+                                <div className="flex items-center space-x-3 py-2 mt-1 w-full">
                                     <button
                                         className="flex items-center space-x-3"
                                         onClick={() => {
@@ -171,7 +174,7 @@ export default function APSelection(): JSX.Element {
                                             </svg>
                                         </button>
                                         {isDropdownOpen === ap.shortName && (
-                                        <div ref={dropdownRef} className="absolute left-full top-0 ml-2 w-40 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 z-10" style={{ maxHeight: '200px', overflowY: 'auto' }}>
+                                        <div ref={dropdownRef} className="absolute full top-0 w-30 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 z-10" style={{ maxHeight: '200px', overflowY: 'auto' }}>
                                             <div className="py-1 px-1 grid grid-cols-4 gap-2">
                                                 {Object.keys(DepartmentColors).map((color) => (
                                                     <button
@@ -193,8 +196,8 @@ export default function APSelection(): JSX.Element {
             ))}
             {(JSON.stringify(selectedAP) !== JSON.stringify(selectedData) || 
              JSON.stringify(selectedColors) !== JSON.stringify(userColors)) && (
-                <div className="flex flex-col items-center justify-center space-y-3 pt-6 pb-4">
-                    <p className="text-xs text-neutral-500">อย่าลืมกดบันทึก</p>
+                <div className="flex flex-col items-center justify-center space-y-2">
+                    <p className="text-base text-neutral-500">อย่าลืมกดบันทึก</p>
                     <button
                         onClick={saveHandler}
                         className="bg-primary-500 rounded-lg px-6 py-2 text-white font-medium"
@@ -203,12 +206,12 @@ export default function APSelection(): JSX.Element {
                     </button>
                 </div>
             )}
-            <div className="flex justify-center mt-6">
+            <div className="flex px-2 justify-center mt-4">
                 <a
                     href="/slots"
-                    className="bg-primary-500 text-white rounded-2xl mt-6 px-6 py-2 font-medium"
+                    className="bg-primary-500 w-full text-white text-center rounded-2xl mt-4 px-6 py-3 font-semibold"
                 >
-                    ดู AP Slots
+                    ไปดูหน้า AP Slots
                 </a>
             </div>
         </div>
