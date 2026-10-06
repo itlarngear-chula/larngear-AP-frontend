@@ -2,12 +2,13 @@
 
 import { ISlot } from '@/interfaces/ap';
 import axios from 'axios';
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { PiFunnelFill, PiInfoFill, PiGearFill } from 'react-icons/pi';
 import moment from 'moment';
 import { useAuth } from '@/contexts/AuthContext';
 import Edit from '@/components/Edit';
 import Slot from '@/components/Slot';
+import ToastMessage, { ToastMessageData } from '@/components/ToastMessage';
 
 export default function Upcoming() {
     const { user } = useAuth();
@@ -19,6 +20,8 @@ export default function Upcoming() {
     const [selectedEditSlot, setSelectedEditSlot] = useState<number | null>(
         null
     );
+    const [toast, setToast] = useState<ToastMessageData | null>(null);
+    const dismissToast = useCallback(() => setToast(null), []);
 
     const config = {
         headers: {
@@ -126,72 +129,77 @@ export default function Upcoming() {
             <div className="space-y-4 pb-28 min-h-screen">
                 {page === 'active'
                     ? activeSlots
-                          ?.filter((slot) => {
-                              if (isFilter) {
-                                  return user?.selectedDepartments.includes(
-                                      slot.department
-                                  );
-                              }
-                              return true;
-                          })
-                          .map((slot, index) => (
-                              <Slot
-                                  key={index}
-                                  slot={slot}
-                                  page={page}
-                                  setSelectedEditSlot={setSelectedEditSlot}
-                                  showDetails={showDetails}
-                              />
-                          ))
+                        ?.filter((slot) => {
+                            if (isFilter) {
+                                return user?.selectedDepartments.includes(
+                                    slot.department
+                                );
+                            }
+                            return true;
+                        })
+                        .map((slot, index) => (
+                            <Slot
+                                key={index}
+                                slot={slot}
+                                page={page}
+                                setSelectedEditSlot={setSelectedEditSlot}
+                                showDetails={showDetails}
+                            />
+                        ))
                     : page === 'upcoming'
-                    ? upcomingSlots
-                          ?.filter((slot) => {
-                              if (isFilter) {
-                                  return user?.selectedDepartments.includes(
-                                      slot.department
-                                  );
-                              }
-                              return true;
-                          })
-                          .map((slot, index) => (
-                              <Slot
-                                  key={index}
-                                  slot={slot}
-                                  page={page}
-                                  setSelectedEditSlot={setSelectedEditSlot}
-                                  showDetails={showDetails}
-                              />
-                          ))
-                    : slots
-                          ?.filter((slot) => {
-                              if (isFilter) {
-                                  return user?.selectedDepartments.includes(
-                                      slot.department
-                                  );
-                              }
-                              return true;
-                          })
-                          .map((slot, index) => (
-                              <Slot
-                                  key={index}
-                                  slot={slot}
-                                  page={page}
-                                  setSelectedEditSlot={setSelectedEditSlot}
-                                  showDetails={showDetails}
-                              />
-                          ))}
+                        ? upcomingSlots
+                            ?.filter((slot) => {
+                                if (isFilter) {
+                                    return user?.selectedDepartments.includes(
+                                        slot.department
+                                    );
+                                }
+                                return true;
+                            })
+                            .map((slot, index) => (
+                                <Slot
+                                    key={index}
+                                    slot={slot}
+                                    page={page}
+                                    setSelectedEditSlot={setSelectedEditSlot}
+                                    showDetails={showDetails}
+                                />
+                            ))
+                        : slots
+                            ?.filter((slot) => {
+                                if (isFilter) {
+                                    return user?.selectedDepartments.includes(
+                                        slot.department
+                                    );
+                                }
+                                return true;
+                            })
+                            .map((slot, index) => (
+                                <Slot
+                                    key={index}
+                                    slot={slot}
+                                    page={page}
+                                    setSelectedEditSlot={setSelectedEditSlot}
+                                    showDetails={showDetails}
+                                />
+                            ))}
             </div>
 
             {selectedEditSlot && (
-                <div className="z-40 fixed bottom-0 left-0 right-0 rounded-t-3xl bg-neutral-50 shadow-3xl flex justify-center items-center px-2 py-6">
-                    <Edit
-                        slot={selectedEditSlot}
-                        onFinished={() => {
-                            fetchSlots();
-                            setSelectedEditSlot(null);
-                        }}
-                        user={user}
-                    />
+                <div className="fixed inset-0 z-40 flex items-center justify-center overflow-y-auto p-4">
+                    <div className="w-full max-w-screen-sm rounded-3xl p-4">
+                        <Edit
+                            slot={selectedEditSlot}
+                            onFinished={() => {
+                                fetchSlots();
+                                setSelectedEditSlot(null);
+                            }}
+                            onCancel={() => setSelectedEditSlot(null)}
+                            user={user}
+                            hasSelectedSlot={true}
+                            onToast={setToast}
+                        />
+                    </div>
                 </div>
             )}
 
@@ -202,6 +210,8 @@ export default function Upcoming() {
                 ></div>
             )}
 
+            {toast && <ToastMessage {...toast} onClose={dismissToast} />}
+
             <div className="z-20 fixed bottom-6 left-4 right-4 h-16 bg-white shadow-md rounded-2xl flex justify-between items-center font-bold text-gray-300 p-2.5 pr-4 space-x-2">
                 <div className="flex w-full h-full">
                     <button
@@ -209,11 +219,10 @@ export default function Upcoming() {
                             setPage('active');
                             localStorage.setItem('page', 'active');
                         }}
-                        className={`w-full h-full rounded-lg ${
-                            page === 'active'
-                                ? 'bg-primary-500 text-white'
-                                : 'text-gray-400'
-                        }`}
+                        className={`w-full h-full rounded-lg ${page === 'active'
+                            ? 'bg-primary-500 text-white'
+                            : 'text-gray-400'
+                            }`}
                     >
                         ปัจจุบัน
                     </button>
@@ -222,11 +231,10 @@ export default function Upcoming() {
                             setPage('upcoming');
                             localStorage.setItem('page', 'upcoming');
                         }}
-                        className={`w-full h-full rounded-lg ${
-                            page === 'upcoming'
-                                ? 'bg-primary-500 text-white'
-                                : 'text-gray-400'
-                        }`}
+                        className={`w-full h-full rounded-lg ${page === 'upcoming'
+                            ? 'bg-primary-500 text-white'
+                            : 'text-gray-400'
+                            }`}
                     >
                         อนาคต
                     </button>
@@ -235,11 +243,10 @@ export default function Upcoming() {
                             setPage('all');
                             localStorage.setItem('page', 'all');
                         }}
-                        className={`w-full h-full rounded-lg ${
-                            page === 'all'
-                                ? 'bg-primary-500 text-white'
-                                : 'text-gray-400'
-                        }`}
+                        className={`w-full h-full rounded-lg ${page === 'all'
+                            ? 'bg-primary-500 text-white'
+                            : 'text-gray-400'
+                            }`}
                     >
                         ทั้งหมด
                     </button>
@@ -247,17 +254,15 @@ export default function Upcoming() {
                 <div className="flex h-full space-x-1">
                     <button
                         onClick={() => setShowDetails(!showDetails)}
-                        className={`h-full aspect-square grid place-content-center text-2xl rounded-lg ${
-                            showDetails && 'bg-primary-500 text-white'
-                        }`}
+                        className={`h-full aspect-square grid place-content-center text-2xl rounded-lg ${showDetails && 'bg-primary-500 text-white'
+                            }`}
                     >
                         <PiInfoFill />
                     </button>
                     <button
                         onClick={() => setIsFilter(!isFilter)}
-                        className={`h-full aspect-square grid place-content-center text-2xl rounded-lg ${
-                            isFilter && 'bg-primary-500 text-white'
-                        }`}
+                        className={`h-full aspect-square grid place-content-center text-2xl rounded-lg ${isFilter && 'bg-primary-500 text-white'
+                            }`}
                     >
                         <PiFunnelFill />
                     </button>

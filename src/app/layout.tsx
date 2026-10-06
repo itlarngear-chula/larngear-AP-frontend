@@ -6,6 +6,7 @@ import AuthProvider from '@/contexts/AuthContext';
 const ibmPlexSansThai = IBM_Plex_Sans_Thai({
     subsets: ['thai'],
     weight: ['100', '200', '300', '400', '500', '600', '700'],
+    variable: '--font-ibm-plex-sans-thai',
 });
 
 export const metadata = {
@@ -19,10 +20,8 @@ export default function RootLayout({
     children: React.ReactNode;
 }) {
     return (
-        <html lang="th">
-            <body
-                className={`${ibmPlexSansThai.className} flex justify-center bg-gray-50`}
-            >
+        <html lang="th" className={ibmPlexSansThai.variable}>
+            <body className="flex justify-center bg-gray-50">
                 <LiffProvider>
                     <AuthProvider>
                         <div className="max-w-screen-sm w-full p-4">

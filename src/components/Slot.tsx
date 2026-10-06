@@ -54,42 +54,51 @@ const Slot: React.FC<SlotProps> = ({
     return (
         <div
             id={slot.slot.toString()}
-            className={`w-full rounded-xl shadow-md bg-white px-6 py-4 space-y-2 ${
-                isActive ? '' : isAnnounced ? 'opacity-[35%]' : ''
-            } ${
-                isActive && page === 'all'
+            className={`w-full rounded-xl shadow-md bg-white px-6 py-4 space-y-2 ${isActive
+                    ? ''
+                    : isAnnounced
+                        ? 'opacity-[35%]'
+                        : ''
+                } ${isActive && page === 'all'
                     ? 'border-[3.5px] border-neutral-500'
                     : ''
-            }`}
+                } ${slot.totalOffset
+                    ? slot.totalOffset < 0
+                        ? 'border-l-2 border-error-600'
+                        : slot.totalOffset > 0
+                            ? 'border-l-2 border-success-600'
+                            : ''
+                    : ''
+                }`}
         >
             <h3
-                className={`font-semibold space-x-4 w-full justify-between flex items-center ${
-                    isActive
-                        ? 'text-neutral-700'
-                        : isAnnounced
+                className={`font-semibold space-x-4 w-full justify-between flex items-center ${isActive
+                    ? 'text-neutral-700'
+                    : isAnnounced
                         ? 'text-neutral-500'
                         : 'text-neutral-700'
-                }`}
+                    }`}
             >
-                <span>{`#${slot.slot} | ${
-                    start === end ? start : `${start} - ${end}`
-                }`}</span>
-                <div className="flex items-center gap-2">
+                <div className='w-full flex justify-left items-center gap-4'>
+                    <span>{`#${slot.slot} | ${start === end ? start : `${start} - ${end}`
+                        }`}</span>
                     {slot.totalOffset != null && slot.totalOffset !== 0 && (
-                    <p className="text-sm font-medium text-neutral-500">
-                        {slot.totalOffset < 0
-                        ? `-${Math.abs(slot.totalOffset)} นาทีแล้ว`
-                        : `+${Math.abs(slot.totalOffset)} นาทีแล้ว`}
-                    </p>
+                        <p className={`text-sm font-medium px-2 py-0.5 rounded-full 
+                    ${slot.totalOffset < 0 ? `text-error-700 bg-error-100` : `text-success-700 bg-success-100`}`}>
+                            {slot.totalOffset < 0
+                                ? `${slot.totalOffset} นาที`
+                                : `+${Math.abs(slot.totalOffset)} นาที`}
+                        </p>
                     )}
-
-                    { user?.superuser && (
-                    <span
-                        onClick={() => setSelectedEditSlot(slot.slot)}
-                        className="text-lg rounded-lg text-neutral-400 cursor-pointer"
-                    >
-                        <PiPencilSimpleFill />
-                    </span>
+                </div>
+                <div className="flex items-center gap-2">
+                    {user?.superuser && (
+                        <span
+                            onClick={() => setSelectedEditSlot(slot.slot)}
+                            className="text-lg rounded-lg text-neutral-400 cursor-pointer"
+                        >
+                            <PiPencilSimpleFill />
+                        </span>
                     )}
                 </div>
             </h3>
@@ -100,14 +109,13 @@ const Slot: React.FC<SlotProps> = ({
                             color: DepartmentColors[userColors[slot.department] as keyof typeof DepartmentColors]
                         }}
                     >
-                        {slot.department} | {slot.event}                
+                        {slot.department} | {slot.event}
                     </h3>
                     <p className="text-sm text-neutral-500 font-bold">
                         {/* {slot.department} |{' '} */}
                         <a
-                            href={`tel:${
-                                contactMatches ? contactMatches[2] : ''
-                            }`}
+                            href={`tel:${contactMatches ? contactMatches[2] : ''
+                                }`}
                         >
                             ผต. : {slot.contact}
                         </a>
