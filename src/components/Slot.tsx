@@ -83,10 +83,10 @@ const Slot: React.FC<SlotProps> = ({
                     <span>{`#${slot.slot} | ${start === end ? start : `${start} - ${end}`
                         }`}</span>
                     {slot.totalOffset != null && slot.totalOffset !== 0 && (
-                        <p className={`text-sm font-medium text-neutral-500 px-2 py-0.5 rounded-full 
+                        <p className={`text-sm font-medium px-2 py-0.5 rounded-full 
                     ${slot.totalOffset < 0 ? `text-error-700 bg-error-100` : `text-success-700 bg-success-100`}`}>
                             {slot.totalOffset < 0
-                                ? `-${Math.abs(slot.totalOffset)} นาที`
+                                ? `${slot.totalOffset} นาที`
                                 : `+${Math.abs(slot.totalOffset)} นาที`}
                         </p>
                     )}
