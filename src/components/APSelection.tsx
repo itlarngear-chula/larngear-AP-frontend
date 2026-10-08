@@ -174,8 +174,12 @@ export default function APSelection(): JSX.Element {
                                             </svg>
                                         </button>
                                         {isDropdownOpen === ap.shortName && (
-                                        <div ref={dropdownRef} className="absolute full top-0 w-30 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 z-10" style={{ maxHeight: '200px', overflowY: 'auto' }}>
-                                            <div className="py-1 px-1 grid grid-cols-4 gap-2">
+                                        <div
+                                            ref={dropdownRef}
+                                            className="absolute right-0 top-full z-20 mt-2 w-40 rounded-lg border border-neutral-200 bg-white p-2 shadow-lg ring-1 ring-black/5"
+                                            style={{ maxHeight: '200px', overflowY: 'auto' }}
+                                        >
+                                            <div className="grid grid-cols-4 justify-items-center gap-2">
                                                 {Object.keys(DepartmentColors).map((color) => (
                                                     <button
                                                         key={color}
