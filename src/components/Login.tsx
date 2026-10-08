@@ -10,7 +10,7 @@ export default function Login({
 }): JSX.Element {
     const [studentId, setStudentId] = useState<string>('');
 
-    const isStudentIdValid = /^6[5|6|7|8]3\d{5}21$/.test(studentId);
+    const isStudentIdValid = /^6[5|6|7|8|9]3\d{5}21$/.test(studentId);
 
     const [isLoading, setIsLoading] = useState<boolean>(false);
 
