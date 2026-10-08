@@ -23,7 +23,7 @@ export default function Login({
             </div>
             <div className="space-y-1">
                 <h1 className="font-bold text-3xl text-neutral-800">
-                    LG25 AP Bot
+                    LG26 AP Bot
                 </h1>
                 <p className="text-sm text-neutral-500">
                     กรอกรหัสนิสิตเพื่อยืนยันตัวหน่อย
